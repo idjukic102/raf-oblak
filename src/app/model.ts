@@ -3,7 +3,7 @@ export interface User{
     firstName: string,
     lastName: string,
     email: string,
-    password: string,
+    password?: string,
     permissions: Dozvole[]
 }
 
@@ -14,3 +14,18 @@ export interface Login{
 export enum Dozvole{
     Read="read",Create="create",Update="update",Delete="delete"
 }
+
+export enum StanjeMasine {
+  Slobodna = 'Slobodna',
+  Zauzeta = 'Zauzeta',
+  Ugasena = 'Ugasena',
+  Upaljena = "Upaljena",
+}
+
+export interface Masina {
+  name: string;
+  jiBroj?: string;
+  napravioJe?: string;
+  stanje?: StanjeMasine;
+  aktivna?: boolean;
+} 

@@ -1,0 +1,25 @@
+<table class="table table-dark table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Permissions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let user of users; let i = index"
+      [routerLink]="'/users/' + user.userId"
+    >
+      <th scope="row">{{ i }}</th>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.permissions }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button [routerLink]="'/user/create'" class="btn btn-primary">Add</button>

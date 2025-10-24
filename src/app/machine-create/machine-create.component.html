@@ -1,0 +1,24 @@
+<p>machine-create works!</p>
+<p>user-create works!</p>
+<form [formGroup]="createForm" (submit)="onSubmit()" class="mb-5">
+  <div class="form-group">
+    <label for="name">Machine name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      [formControlName]="'name'"
+    />
+    <div
+      class="error-message text-danger"
+      *ngIf="createForm.get('name')?.errors?.['required']"
+    >
+      Machine name is required!
+    </div>
+  </div>
+  
+
+  <button [disabled]="!createForm.valid" type="submit" class="btn btn-primary">
+    Submit
+  </button>
+</form>
