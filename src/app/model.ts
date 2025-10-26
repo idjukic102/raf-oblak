@@ -16,15 +16,22 @@ export enum Dozvole{
 }
 
 export enum StanjeMasine {
-  Slobodna = 'Slobodna',
-  Zauzeta = 'Zauzeta',
   Ugasena = 'Ugasena',
   Upaljena = "Upaljena",
+  Unistena = "Unistena",
 }
 
 export interface Masina {
   name: string;
-  jiBroj?: string;
+  jiBroj: number;
+  napravioJe: string;
+  stanje: StanjeMasine;
+  aktivna: boolean;
+} 
+
+export interface CreateMasina {
+  name: string;
+  jiBroj?: number;
   napravioJe?: string;
   stanje?: StanjeMasine;
   aktivna?: boolean;

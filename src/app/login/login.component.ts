@@ -8,37 +8,40 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  
-  login: Login={
-    email:"",
-    password:""
-  }
+  login: Login = {
+    email: '',
+    password: '',
+  };
   loginForm: FormGroup;
 
-  constructor(private router:Router, private snackBar:MatSnackBar ,private route: ActivatedRoute, private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) {
     this.loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(2)]],
-  });
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(2)]],
+    });
   }
-
 
   // onSubmit(login:any){
   //  this.userService.login(login);
   // }
-  onSubmit(){
-    this.login.email=this.loginForm.get('email')?.value
-    this.login.password=this.loginForm.get('password')?.value
-    if(!this.userService.login(this.login))
+  onSubmit() {
+    this.login.email = this.loginForm.get('email')?.value;
+    this.login.password = this.loginForm.get('password')?.value;
+    if (!this.userService.login(this.login))
       this.snackBar.open('Pogrešan email ili lozinka!', 'Zatvori', {
-          duration: 4000,
-          panelClass: ['error-snackbar'] 
-        });
+        duration: 4000,
+        panelClass: ['error-snackbar'],
+      });
 
-
-    //this.router.navigate["''"]
+    this.router.navigate(['users']);
   }
 }

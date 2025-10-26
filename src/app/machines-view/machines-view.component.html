@@ -1,25 +1,123 @@
-<table class="table table-dark table-hover">
+<form class="search-form" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <label for="name">Naziv</label>
+    <input id="name" type="text" formControlName="name" placeholder="" />
+  </div>
+
+  <div class="row">
+    <label for="stanja">Stanje</label>
+    <select id="stanja" formControlName="stanja" multiple>
+      <option *ngFor="let s of svaStanja" [value]="s">{{ s }}</option>
+    </select>
+    <small class="hint"></small>
+  </div>
+
+  <div class="actions">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="createForm.invalid"
+    >
+      Pretraži
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="onReset()">
+      Poništi
+    </button>
+  </div>
+</form>
+
+<hr />
+
+<table *ngIf="machines?.length; else nemaPodataka" class="results">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First name</th>
-      <th scope="col">Last name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Permissions</th>
+      <th>Naziv</th>
+      <th>Stanje</th>
+      <th>Aktivnost</th>
+      <th>Akcije</th>
     </tr>
   </thead>
   <tbody>
-    <tr
-      *ngFor="let machine of machines; let i = index"
-      [routerLink]="'/users/' + user.userId"
-    >
-      <th scope="row">{{ i }}</th>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.permissions }}</td>
+    <tr *ngFor="let m of machines">
+      <td>{{ m.name }}</td>
+      <td>{{ m.stanje }}</td>
+      <td>{{ m.aktivna }}</td>
+      <td class="actions">
+        <button
+          (click)="start(m.jiBroj)"
+          class="btn btn-secondary"
+          [disabled]="m.stanje !== StanjeMasine.Ugasena"
+        >
+          Start
+        </button>
+        <button
+          (click)="stop(m.jiBroj)"
+          class="btn btn-secondary"
+          [disabled]="m.stanje !== StanjeMasine.Upaljena"
+        >
+          Stop
+        </button>
+        <button
+          (click)="restart(m.jiBroj)"
+          class="btn btn-secondary"
+          [disabled]="
+            restarting.has(m.jiBroj) || m.stanje !== StanjeMasine.Upaljena
+          "
+        >
+          Restart
+        </button>
+        <!-- <button (click)="openErrors(m.id)">Istorija grešaka</button> -->
+      </td>
     </tr>
   </tbody>
 </table>
 
-<button [routerLink]="'/user/create'" class="btn btn-primary">Add</button>
+<ng-template #nemaPodataka>
+  <p>Nema podataka za zadate kriterijume.</p>
+</ng-template>
+
+<style>
+  .search-form {
+    display: grid;
+    gap: 12px;
+    max-width: 560px;
+  }
+  .row {
+    display: grid;
+    gap: 6px;
+  }
+  label {
+    font-weight: 600;
+  }
+  input,
+  select {
+    padding: 8px;
+    font-size: 14px;
+  }
+  select[multiple] {
+    height: 110px;
+  }
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .results {
+    border-collapse: collapse;
+    margin-top: 16px;
+    width: 100%;
+  }
+  .results th,
+  .results td {
+    border: 1px solid #e5e5e5;
+    padding: 8px;
+  }
+  .results th {
+    text-align: left;
+    background: #fafafa;
+  }
+  .hint {
+    font-size: 12px;
+    color: #666;
+  }
+</style>

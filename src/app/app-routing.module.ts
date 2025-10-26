@@ -5,6 +5,8 @@ import { UsersViewComponent } from './users-view/users-view.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { MachineCreateComponent } from './machine-create/machine-create.component';
+import { MachinesViewComponent } from './machines-view/machines-view.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   // {
@@ -16,24 +18,33 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    //canActivate: [AuthGuard],
-    //canDeactivate: [AuthGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'users',
     component: UsersViewComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'users/:userId',
     component: UserEditComponent,
+    canActivate: [authGuard],
+    
   },
   {
-    path: "user/create",
+    path: 'user/create',
     component: UserCreateComponent,
+    canActivate: [authGuard],
   },
   {
-    path: "machine/create",
+    path: 'machine/create',
     component: MachineCreateComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'machine/search',
+    component: MachinesViewComponent,
+    canActivate: [authGuard],
   },
 ];
 

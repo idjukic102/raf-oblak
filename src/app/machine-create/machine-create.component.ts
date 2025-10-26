@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MachineService } from '../services/machine.service';
-import { Masina } from '../model';
+import { CreateMasina, Masina } from '../model';
 
 @Component({
   selector: 'app-machine-create',
@@ -12,7 +12,7 @@ import { Masina } from '../model';
 export class MachineCreateComponent {
 
   createForm: FormGroup;
-  machine: Masina = {
+  machine: CreateMasina = {
   name : '',
   };
 
@@ -33,7 +33,7 @@ export class MachineCreateComponent {
 
     this.machineService.addMachine(this.machine).subscribe(ma=>
       this.createForm.reset());
-    //this.router.navigate(['users'])
+    this.router.navigate(['machine/search']);
   }
 
   ngOnInit(): void {

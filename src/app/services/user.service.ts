@@ -14,8 +14,8 @@ export class UserService {
       userId: 1,
       firstName: 'Marko',
       lastName: 'Marković',
-      email: 'marko.markovic@example.com',
-      password: '$2b$10$M2NQy5DhxT8eBpygqB1eKuCe5iPRVsojylqEzyV9PtFCEwJ6n7PFS',
+      email: 'm@gmail.com',
+      password: '123',
       permissions: [
         Dozvole.Read,
         Dozvole.Create,
@@ -27,24 +27,24 @@ export class UserService {
       userId: 2,
       firstName: 'Jelena',
       lastName: 'Jovanović',
-      email: 'jelena.jovanovic@example.com',
-      password: '$2b$10$FrnZ8l6nb9iG4F4Oa7TeVuNRcDh7QySyYF9pTQY4cS4e1ul0VJzsy',
+      email: 'j@gmail.com',
+      password: '123',
       permissions: [Dozvole.Read, Dozvole.Update],
     },
     {
       userId: 3,
       firstName: 'Ivan',
       lastName: 'Petrović',
-      email: 'ivan.petrovic@example.com',
-      password: '$2b$10$R1o7dZ7eOqM9MeM.0uqDIuWm/RN.zRifQf3M3AfMZ0PFr4pGJ7Z4i',
+      email: 'i@gmail.com',
+      password: '123',
       permissions: [Dozvole.Read],
     },
     {
       userId: 4,
       firstName: 'Milica',
       lastName: 'Stojanović',
-      email: 'milica.stojanovic@example.com',
-      password: '$2b$10$SgD3l6oCJv3zvDqV7GJ0Nex9Qn7OxItS5gZVw/12mYj2p4SkG04e2',
+      email: 'ms@.com',
+      password: '123',
       permissions: [Dozvole.Create, Dozvole.Read],
     },
     {
@@ -64,11 +64,17 @@ export class UserService {
       (user) => user.email === login.email && user.password === login.password
     );
     //this.router.navigate()
-    if (user) return true;
-    else return false;
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+      return true;
+    } else return false;
   }
 
-  addUser(user:User) {
+  logout(login: Login) {
+    localStorage.removeItem('user');
+  }
+
+  addUser(user: User) {
     this.users.push(user);
   }
 
@@ -81,12 +87,4 @@ export class UserService {
   findUser(id: number): Observable<User | undefined> {
     return of(this.users.find((user) => user.userId == id));
   }
-
-  //   getUsers(): Observable<Login[]> {
-  //     return this.httpClient.get<Login[]>(`${this.apiUrl}/users`);
-  //   }
-
-  //   findUser(id: number): Observable<Login> {
-  //     return this.httpClient.get<Login>(`${this.apiUrl}/users/${id}`)
-  //   }
 }
