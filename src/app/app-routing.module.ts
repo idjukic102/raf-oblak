@@ -7,6 +7,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { MachineCreateComponent } from './machine-create/machine-create.component';
 import { MachinesViewComponent } from './machines-view/machines-view.component';
 import { authGuard } from './guards/auth.guard';
+import { ErrorsViewComponent } from './errors-view/errors-view.component';
 
 const routes: Routes = [
   // {
@@ -44,6 +45,11 @@ const routes: Routes = [
   {
     path: 'machine/search',
     component: MachinesViewComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'machine/errors',
+    component: ErrorsViewComponent,
     canActivate: [authGuard],
   },
 ];

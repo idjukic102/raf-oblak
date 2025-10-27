@@ -12,6 +12,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { MachineCreateComponent } from './machine-create/machine-create.component';
 import { MachinesViewComponent } from './machines-view/machines-view.component';
+import { ErrorsViewComponent } from './errors-view/errors-view.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MachinesViewComponent } from './machines-view/machines-view.component';
     UserEditComponent,
     UserCreateComponent,
     MachineCreateComponent,
-    MachinesViewComponent
+    MachinesViewComponent,
+    ErrorsViewComponent
   ],
   imports: [
     BrowserModule,

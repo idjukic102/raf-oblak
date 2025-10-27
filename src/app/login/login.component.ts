@@ -36,12 +36,13 @@ export class LoginComponent {
   onSubmit() {
     this.login.email = this.loginForm.get('email')?.value;
     this.login.password = this.loginForm.get('password')?.value;
-    if (!this.userService.login(this.login))
+    if (!this.userService.login(this.login)) {
       this.snackBar.open('Pogrešan email ili lozinka!', 'Zatvori', {
         duration: 4000,
         panelClass: ['error-snackbar'],
       });
-
-    this.router.navigate(['users']);
+    } else {
+      this.router.navigate(['users']);
+    }
   }
 }

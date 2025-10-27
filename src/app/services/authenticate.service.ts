@@ -13,4 +13,7 @@ export class AuthenticateService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('user');
   }
+  getCurrentUser(): string {
+      return JSON.parse(<string>localStorage.getItem('user')).email
+  }
 }

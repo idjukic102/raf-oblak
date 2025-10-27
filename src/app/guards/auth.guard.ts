@@ -8,7 +8,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const snackBar = inject(MatSnackBar);
   const path = route.routeConfig?.path;
   const user = JSON.parse(<string>localStorage.getItem('user'));
+  if (user) console.log(user.permissions);
   if (!user && path !== 'login') {
+    console.log(path);
     snackBar.open('Morate biti ulogovani', 'Zatvori', {
       duration: 4000,
       panelClass: ['error-snackbar'],
@@ -23,6 +25,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     });
     router.navigate(['users']);
   }
+  //console.log(user.permissions);
   if (path === 'users' && !user.permissions.includes(Dozvole.Read)) {
     console.log(123);
     snackBar.open('Nemate dozvolu za ovu akciju', 'Zatvori', {
@@ -46,13 +49,27 @@ export const authGuard: CanActivateFn = (route, state) => {
     });
     return false;
   }
-  if (path === 'users' && !user.permissions.includes(Dozvole.Delete)) {
+  if (path === 'machine/create' && !user.permissions.includes(Dozvole.Napravi)) {
+    snackBar.open('Nemate dozvolu za ovu akciju', 'Zatvori', {
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+    });
+    return false;
+  }if (path === 'machine/search' && !user.permissions.includes(Dozvole.Pretrazi)) {
     snackBar.open('Nemate dozvolu za ovu akciju', 'Zatvori', {
       duration: 4000,
       panelClass: ['error-snackbar'],
     });
     return false;
   }
+ 
+  // if (path === 'users' && !user.permissions.includes(Dozvole.Delete)) {
+  //   snackBar.open('Nemate dozvolu za ovu akciju', 'Zatvori', {
+  //     duration: 4000,
+  //     panelClass: ['error-snackbar'],
+  //   });
+  //   return false;
+  // }
 
   return true;
 };

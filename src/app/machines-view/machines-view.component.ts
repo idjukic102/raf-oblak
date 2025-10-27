@@ -10,9 +10,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class MachinesViewComponent {
   readonly svaStanja: StanjeMasine[] = [
-     StanjeMasine.Ugasena,
+    StanjeMasine.Ugasena,
     StanjeMasine.Upaljena,
-    StanjeMasine.Unistena,
   ];
 
   createForm: FormGroup;
@@ -52,7 +51,6 @@ export class MachinesViewComponent {
       stanje: [],
     });
     this.onSubmit();
-
   }
   start(id: number) {
     this.machineService.start(id).subscribe(() => this.reloadAfterAction());
@@ -60,7 +58,7 @@ export class MachinesViewComponent {
   stop(id: number) {
     this.machineService.stop(id).subscribe(() => this.reloadAfterAction());
   }
-  public StanjeMasine = StanjeMasine; 
+  public StanjeMasine = StanjeMasine;
   public restarting = new Set<number>();
 
   restart(id: number) {
@@ -77,9 +75,10 @@ export class MachinesViewComponent {
       },
     });
   }
-  //   openErrors(id: string) {
-  //   this.router.navigate(['/machines', id, 'errors']);
-  // }
+  destroy(id: number) {
+    this.machineService.destroy(id).subscribe(() => this.reloadAfterAction());
+  }
+
   private reloadAfterAction() {
     const name = (this.createForm.get('name')?.value || '').trim();
     const stanja = this.createForm.get('stanje')?.value || [];
