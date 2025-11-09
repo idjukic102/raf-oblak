@@ -41,6 +41,10 @@ export class UserService {
         Dozvole.Napravi,
         Dozvole.Pretrazi,
         Dozvole.Ugasi,
+        Dozvole.Upali,
+
+        Dozvole.Restartuj,
+        Dozvole.Unisti,
       ],
     },
     {
@@ -55,7 +59,7 @@ export class UserService {
       userId: 4,
       firstName: 'Milica',
       lastName: 'Stojanović',
-      email: 'ms@.com',
+      email: 'ms@com',
       password: '123',
       permissions: [Dozvole.Create, Dozvole.Read],
     },

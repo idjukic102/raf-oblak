@@ -43,36 +43,10 @@
       <td>{{ m.stanje }}</td>
       <td>{{ m.aktivna }}</td>
       <td class="actions">
-        <button
-          (click)="start(m.jiBroj)"
-          class="btn btn-secondary"
-          [disabled]="m.stanje !== StanjeMasine.Ugasena"
-        >
-          Start
+        <button type="button" class="btn btn-primary" (click)="openSchedule(m)">
+          Zakaži operaciju
         </button>
-        <button
-          (click)="stop(m.jiBroj)"
-          class="btn btn-secondary"
-          [disabled]="m.stanje !== StanjeMasine.Upaljena"
-        >
-          Stop
-        </button>
-        <button
-          (click)="restart(m.jiBroj)"
-          class="btn btn-secondary"
-          [disabled]="
-            restarting.has(m.jiBroj) || m.stanje !== StanjeMasine.Upaljena
-          "
-        >
-          Restart
-        </button>
-        <button
-          (click)="destroy(m.jiBroj)"
-          class="btn btn-secondary"
-          [disabled]="m.stanje !== StanjeMasine.Ugasena"
-        >
-          Destroy
-        </button>
+        <!-- <button (click)="openErrors(m.id)">Istorija grešaka</button> -->
       </td>
     </tr>
   </tbody>
@@ -81,6 +55,78 @@
 <ng-template #nemaPodataka>
   <p>Nema podataka za zadate kriterijume.</p>
 </ng-template>
+
+<div class="schedule-backdrop" *ngIf="showScheduleModal">
+  <div class="schedule-modal">
+    <h3>Zakazivanje operacije za {{ selectedMachine?.name }}</h3>
+
+    <form [formGroup]="scheduleForm" (ngSubmit)="submitSchedule()">
+      <div class="row">
+        <label>Operacija</label>
+        <label>
+          <input
+            type="radio"
+            value="START"
+            formControlName="operation"
+            [attr.disabled]="
+              selectedMachine?.stanje !== StanjeMasine.Ugasena ? '' : null
+            "
+          />
+          Start
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="STOP"
+            formControlName="operation"
+            [attr.disabled]="
+              selectedMachine?.stanje !== StanjeMasine.Upaljena ? '' : null
+            "
+          />
+          Stop
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="RESTART"
+            formControlName="operation"
+            [attr.disabled]="
+              selectedMachine?.stanje !== StanjeMasine.Upaljena ? '' : null
+            "
+          />
+          Restart
+        </label>
+      </div>
+
+      <div class="row">
+        <label for="schedule-date">Datum</label>
+        <input id="schedule-date" type="date" formControlName="date" />
+      </div>
+
+      <div class="row">
+        <label for="schedule-time">Vreme</label>
+        <input id="schedule-time" type="time" formControlName="time" />
+      </div>
+
+      <div class="actions">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="closeSchedule()"
+        >
+          Otkaži
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="scheduleForm.invalid"
+        >
+          Sačuvaj
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <style>
   .search-form {
@@ -125,5 +171,28 @@
   .hint {
     font-size: 12px;
     color: #666;
+  }
+
+  .schedule-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .schedule-modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 380px;
+    max-width: 480px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .schedule-modal .row {
+    margin-bottom: 10px;
   }
 </style>

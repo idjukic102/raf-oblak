@@ -74,7 +74,7 @@ export class MachineService {
     let user = JSON.parse(<string>localStorage.getItem('user'));
     console.log(user.userId);
     console.log(user.permissions.length);
-    if (user.permissions.length != 4) {
+    if (user.permissions.length != 10) {
       machines = machines.filter((m) => m.napravioJe == user.userId);
     }
 
@@ -106,12 +106,10 @@ export class MachineService {
   }
 
   addMachine(machine: CreateMasina): Observable<Masina[]> {
-    const nextId = machines.length
-      ? Math.max(...machines.map((m) => m.jiBroj)) + 1
-      : 1;
+    const nextId = machines.length;
 
     const novaMasina: Masina = {
-      jiBroj: 100,
+      jiBroj: nextId,
       name: machine.name,
       napravioJe: 'ulogovan',
       stanje: StanjeMasine.Ugasena,
